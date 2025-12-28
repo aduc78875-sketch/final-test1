@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán</title>
+
+    <!-- Icon & Font -->
+    <link rel="icon" href="../picture/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+
+<!-- ===== QR MODAL ===== -->
+<div id="qrModal" class="overlay hidden">
+    <div class="qr-box">
+        <h3>Quét Mã Thanh Toán</h3>
+        <p>Mở app ngân hàng để quét mã QR</p>
+        <img src="../picture/QR.png" id="qrImage" class="qr-img" alt="QR Code">
+        <div class="money-display" id="transferAmount">0₫</div>
+        <button class="btn-confirm-qr" onclick="finishBankTransfer()">Tôi đã chuyển khoản</button>
+        <button class="btn-cancel-qr" onclick="closeQrModal()">Hủy</button>
+    </div>
+</div>
+
+<!-- ===== SUCCESS MODAL ===== -->
+<div id="successModal" class="overlay hidden">
+    <div class="success-box">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h2>ĐẶT HÀNG THÀNH CÔNG</h2>
+        <div id="successMsg"></div>
+        <a href="../index.html" class="btn-home">VỀ TRANG CHỦ</a>
+    </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="main-header">
+    <div class="container header-inner">
+
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../picture/logo.png"
+                     alt="4Dreamer"
+                     class="logo-img"
+                     onerror="this.style.display='none'">
+                <span class="brand-name">4DreamerCoffee</span>
+            </a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="../index.html">Trang Chủ</a>
+            <a href="../pages/shop.html">Cửa Hàng</a>
+            <a href="../pages/news.html">Tin Tức</a>
+            <a href="../pages//contact.html">Liên Hệ</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="../pages/signin.html" class="btn-login">Đăng nhập</a>
+            <a href="../pages/signup.html" class="btn-signup">Đăng ký</a>
+
+            <label for="menu-toggle" class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<input type="checkbox" id="menu-toggle" class="menu-checkbox">
+<div class="mobile-menu-overlay"></div>
+
+<div class="mobile-menu-container">
+    <div class="menu-header">
+        <span class="mobile-logo-text">4Dreamer</span>
+        <label for="menu-toggle" class="close-menu">
+            <i class="fa-solid fa-xmark"></i>
+        </label>
+    </div>
+
+    <ul class="mobile-list">
+        <li><a href="../index.html">Trang Chủ</a></li>
+        <li><a href="../pages/shop.html">Cửa Hàng</a></li>
+        <li><a href="../pages/news.html">Tin Tức</a></li>
+        <li><a href="../pages/contact.html">Liên Hệ</a></li>
+    </ul>
+
+    <div class="mobile-auth-group">
+        <a href="../pages/signin.html" class="btn-m-login">Đăng Nhập</a>
+        <a href="../pages/signup.html" class="btn-m-signup">Đăng Ký</a>
+    </div>
+</div>
+
+<!-- ===== CHECKOUT ===== -->
+<div class="container checkout-wrapper">
+
+    <h1 class="checkout-header-title">Thanh Toán Đơn Hàng</h1>
+
+    <form class="checkout-layout" onsubmit="handleCheckout(event)">
+
+        <!-- LEFT -->
+        <div class="left-section">
+            <div class="checkout-box">
+                <div class="box-title">
+                    <span>Đơn hàng</span>
+                    <span id="countItems">0</span>
+                </div>
+
+                <div id="orderItems"></div>
+
+                <div class="summary">
+                    <div>Tạm tính: <span id="subTotal">0₫</span></div>
+                    <div>Phí ship: <b>30.000₫</b></div>
+                    <div class="total">Tổng: <span id="finalTotal">0₫</span></div>
+                </div>
+            </div>
+
+            <a href="cart.html" class="back-cart">
+                <i class="fas fa-angle-left"></i> Quay lại giỏ hàng
+            </a>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right-section">
+
+            <div class="checkout-box">
+                <div class="box-title">
+                    <span>Thông tin giao hàng</span>
+                </div>
+
+                <input id="fullname" required placeholder="Họ tên người nhận">
+                <input id="phone" required placeholder="Số điện thoại">
+                <input placeholder="Email (không bắt buộc)">
+                <input required placeholder="Địa chỉ chi tiết">
+                <textarea placeholder="Ghi chú đơn hàng"></textarea>
+            </div>
+
+            <div class="checkout-box">
+                <div class="box-title">
+                    <span>Thanh toán</span>
+                </div>
+
+                <label class="payment-option active" onclick="selectPayment(this)">
+                    <input type="radio" name="payment" value="cod" checked hidden>
+                    <span>Thanh toán khi nhận hàng (COD)</span>
+                </label>
+
+                <label class="payment-option" onclick="selectPayment(this)">
+                    <input type="radio" name="payment" value="bank" hidden>
+                    <span>Chuyển khoản / QR</span>
+                </label>
+
+                <button class="btn-submit-order">
+                    HOÀN TẤT ĐẶT HÀNG
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="main-footer">
+    <div class="container footer-grid">
+        <div>© 2025 4DreamerCoffee</div>
+    </div>
+</footer>
+<script src="../source/checkout.js"></script>
+</body>
+</html>
+

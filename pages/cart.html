@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+
+    <!-- Icon & Font -->
+    <link rel="icon" href="../picture/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="main-header">
+    <div class="container header-inner">
+
+        <div class="logo">
+            <a href="index.html">
+                <img src="../picture/logo.png" alt="4Dreamer"
+                     class="logo-img"
+                     onerror="this.style.display='none'">
+                <span class="brand-name">4DreamerCoffee</span>
+            </a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="../index.html">Trang Chủ</a>
+            <a href="../pages/shop.html">Cửa Hàng</a>
+            <a href="../pages/news.html">Tin Tức</a>
+            <a href="../pages/contact.html">Liên Hệ</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="../pages/cart.html" class="cart-btn-wrap" title="Giỏ hàng">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </a>
+
+            <a href="../pages/signin.html" class="btn-login">Đăng nhập</a>
+            <a href="../pages/signup.html" class="btn-signup">Đăng ký</a>
+
+            <label for="menu-toggle" class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<input type="checkbox" id="menu-toggle" class="menu-checkbox">
+<div class="mobile-menu-overlay"></div>
+
+<div class="mobile-menu-container">
+    <div class="menu-header">
+        <span class="mobile-logo-text">4Dreamer</span>
+        <label for="menu-toggle" class="close-menu">
+            <i class="fa-solid fa-xmark"></i>
+        </label>
+    </div>
+
+    <ul class="mobile-list">
+        <li><a href="../index.html">Trang Chủ</a></li>
+        <li><a href="../pages/shop.html">Cửa Hàng</a></li>
+        <li><a href="../pages/news.html">Tin Tức</a></li>
+        <li><a href="../pages/contact.html">Liên Hệ</a></li>
+    </ul>
+
+    <div class="mobile-auth-group">
+        <a href="../pages/signin.html" class="btn-m-login">Đăng Nhập</a>
+        <a href="../pages/signup.html" class="btn-m-signup">Đăng Ký</a>
+    </div>
+</div>
+
+<!-- ===== CART CONTENT ===== -->
+<div class="container cart-wrapper">
+    <div class="cart-container">
+
+        <div class="page-title">Giỏ Hàng Của Bạn</div>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th style="width:50px">
+                        <input type="checkbox" id="checkAll" onclick="toggleAll(this)" checked>
+                    </th>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="cartBody"></tbody>
+        </table>
+
+        <div class="cart-summary" id="cartFooter">
+            <a href="../pages/shop.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Mua thêm sản phẩm
+            </a>
+
+            <div class="checkout-area">
+                <p>
+                    Tổng thanh toán
+                    (<span id="selectedCount">0</span> sản phẩm):
+                </p>
+                <div class="final-price" id="totalPrice">₫0</div>
+                <button class="btn-checkout" onclick="processCheckout()">
+                    Tiến Hành Đặt Hàng
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="main-footer">
+    <div class="container footer-grid">
+
+        <div class="footer-block">
+            <h3>4Dreamer Coffee</h3>
+            <p>Đăng ký nhận tin để không bỏ lỡ ưu đãi mới nhất.</p>
+
+            <form class="footer-newsletter">
+                <input type="email" placeholder="Email của bạn...">
+                <button type="submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <div class="socials">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-block">
+            <h3>Giờ Mở Cửa</h3>
+            <ul>
+                <li>Thứ 2 - 6: 07:00 - 22:00</li>
+                <li>Thứ 7 - CN: 08:00 - 23:00</li>
+                <li>Ngày lễ: Mở cửa cả ngày</li>
+            </ul>
+        </div>
+
+        <div class="footer-block">
+            <h3>Liên kết</h3>
+            <ul>
+                <li><a href="../index.html">Trang Chủ</a></li>
+                <li><a href="../pages/shop.html">Cửa Hàng</a></li>
+                <li><a href="../pages/news.html">Tin Tức</a></li>
+                <li><a href="../pages/contact.html">Liên Hệ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-block">
+            <h3>Liên hệ</h3>
+            <p>55 Giải Phóng, Hà Nội</p>
+            <p>090 123 4567</p>
+            <p>contact@4dreamer.com</p>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2025 4DreamerCoffee
+    </div>
+</footer>
+<script src="../source/cart.js"></script>
+</body>
+</html>
